@@ -1,0 +1,30 @@
+name: Python CI
+
+# 觸發條件：每次 push 或 PR
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest   # 在 GitHub 提供的 Linux 環境跑
+    steps:
+      # Step 1: 把程式碼抓下來
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: 安裝 Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # Step 3: 安裝需求套件
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Step 4: 執行 pytest
+      - name: Run pytest
+        run: pytest
